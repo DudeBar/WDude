@@ -1,0 +1,13 @@
+*.pyc
+.DS_Store
+*.csv
+*.dump
+*.mo
+data
+venv
+*.mo
+.idea/workspace.xml
+.idea/dictionaries/*
+.idea/copyright/profiles_settings.xml
+.idea/uiDesigner.xml
+.coverage
