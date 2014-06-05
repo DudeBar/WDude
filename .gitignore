@@ -5,6 +5,7 @@
 *.mo
 data
 venv
+db.sqlite3
 *.mo
 .idea/workspace.xml
 .idea/dictionaries/*
