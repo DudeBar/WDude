@@ -10,6 +10,10 @@ class Command(models.Model):
 	total = models.IntegerField()
 	customer = models.IntegerField(null=True, default=None)
 
+class CustomerHasCommand(models.Model):
+	customer = models.ForeignKey(Customer)
+	command = models.ForeignKey(Command)
+
 class Product(models.Model):
 	product_id = models.IntegerField()
 	name = models.CharField(max_length=50)

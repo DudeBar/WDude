@@ -1,5 +1,6 @@
 # coding=utf-8
 import json
+from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
@@ -76,3 +77,15 @@ def add_command(request):
 	else:
 		form = CommandBillingForm()
 		return render(request, "temp_command.html", {'form':form})
+
+@login_required()
+def add_fidelity(request, customer_id):
+	if request.method == 'POST':
+		print request.POST['command']
+		print request.POST['customer_id']
+	else:
+		command_list = Command.objects.all().order_by('-date')[:10]
+		return render(request, 'add_fidelity.html', {
+			'command_list': command_list,
+			'customer_id': customer_id
+		})

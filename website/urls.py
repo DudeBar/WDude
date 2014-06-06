@@ -10,4 +10,7 @@ urlpatterns = patterns('',
     url(r'^customer_account$', views.customer_account, name='customer_account'),
 
     url(r'^add_command$', views.add_command, name='add_command'),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'bar_login.html'}, name='bar_login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
+    url(r'^add_fidelity/(?P<customer_id>.+)?/$', views.add_fidelity, name='add_fidelity'),
 )
