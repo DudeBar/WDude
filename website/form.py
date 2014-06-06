@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django import forms
-from website.models import Customer
+from website.models import Customer, Billing
 
 
 class LoginForm(forms.Form):
@@ -29,4 +29,19 @@ class CreateCustomerForm(forms.Form):
 			raise forms.ValidationError("Ce login n'est pas disponible")
 		if self.cleaned_data["password"] != self.cleaned_data["confirm_password"]:
 			raise forms.ValidationError("Les deux mots de passes sont differents")
+		return self.cleaned_data
+
+class CommandBillingForm(forms.Form):
+	login = forms.CharField(max_length=20)
+	password = forms.CharField(max_length=20)
+	command = forms.CharField(widget=forms.Textarea)
+
+	def clean(self):
+		super(CommandBillingForm, self).clean()
+		if not Billing.objects.filter(login=self.cleaned_data['login']).exists():
+			raise forms.ValidationError("ERROR")
+		else:
+			billing = Billing.objects.get(login=self.cleaned_data['login'])
+			if billing.password != self.cleaned_data['password']:
+				raise forms.ValidationError("ERROR")
 		return self.cleaned_data

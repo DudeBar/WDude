@@ -1,8 +1,9 @@
 # coding=utf-8
+import json
 
 from django.shortcuts import render, redirect
-from website.form import CreateCustomerForm, LoginForm
-from website.models import Customer
+from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
+from website.models import Customer, Command, Product
 
 
 def home(request):
@@ -50,3 +51,28 @@ def customer_account(request):
 		return render(request, "customer_account.html", {'customer_name': customer.login})
 	else:
 		return redirect("home")
+
+def add_command(request):
+	if request.method == 'POST':
+		form = CommandBillingForm(request.POST)
+		if form.is_valid():
+			command_list = json.loads(form.cleaned_data['command'])
+			total_command = 0
+			command = Command(total=total_command)
+			command.save()
+			for product in command_list:
+				total_command += product['price']
+				Product.objects.create(
+					product_id=product['id'],
+					name=product['name'],
+					price=product['price'],
+					command=command
+				)
+			command.total = total_command
+			command.save()
+
+		else:
+			return False
+	else:
+		form = CommandBillingForm()
+		return render(request, "temp_command.html", {'form':form})
