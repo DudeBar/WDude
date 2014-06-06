@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load qr_tags %}
+
+{% block content %}
+    <div class="container">
+    <h1>Bonjour, {{ customer_name }}</h1>
+    <div class="row">
+		<div class="col-lg-3">
+			<div class="well">
+                {% qr_from_text customer_name "m" %}
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Mon Compte</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-3">Nbr Consommation:</div>
+                        <div class="col-lg-9"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">Nbr Conso Offerte:</div>
+                        <div class="col-lg-9"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}

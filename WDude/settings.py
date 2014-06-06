@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'website',
-    'bootstrap3'
+    'bootstrap3',
+    'qrcode'
 )
 
 MIDDLEWARE_CLASSES = (

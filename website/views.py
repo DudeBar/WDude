@@ -27,7 +27,6 @@ def login(request):
 		else:
 			form = LoginForm()
 			return render(request, "login.html", {'form': form})
-
 	else:
 		return redirect("home")
 
@@ -46,4 +45,8 @@ def customer_create(request):
 		return render(request, "customer_create.html", {'form':form})
 
 def customer_account(request):
-	return redirect("home")
+	if 'customer_id' in request.session:
+		customer = Customer.objects.get(pk=request.session['customer_id'])
+		return render(request, "customer_account.html", {'customer_name': customer.login})
+	else:
+		return redirect("home")
