@@ -10,13 +10,7 @@ class Customer(models.Model):
 class Command(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now())
     total = models.IntegerField()
-    customer = models.IntegerField(null=True, default=None)
-
-
-class CustomerHasCommand(models.Model):
-    customer = models.ForeignKey(Customer)
-    command = models.ForeignKey(Command)
-
+    customer = models.ForeignKey(Customer, null=True)
 
 class Product(models.Model):
     product_id = models.IntegerField()

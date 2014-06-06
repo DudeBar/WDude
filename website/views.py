@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render, redirect
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product, CustomerHasCommand
+from website.models import Customer, Command, Product
 
 
 def home(request):
@@ -89,10 +89,12 @@ def add_fidelity(request, customer_id):
     if request.method == 'POST':
         command = Command.objects.get(pk=request.POST['command_id'])
         customer = Customer.objects.get(pk=request.POST['customer_id'])
-        CustomerHasCommand.objects.create(customer=customer, command=command)
+        command.customer = customer
+        command.save()
+        return redirect('home')
 
     else:
-        command_list = Command.objects.all().order_by('-date')[:10]
+        command_list = Command.objects.filter().order_by('-date')[:10]
         return render(request, 'add_fidelity.html', {
             'command_list': command_list,
             'customer_id': customer_id
