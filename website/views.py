@@ -94,7 +94,7 @@ def add_fidelity(request, customer_id):
         return redirect('home')
 
     else:
-        command_list = Command.objects.filter().order_by('-date')[:10]
+        command_list = Command.objects.filter(customer=None).order_by('-date')[:10]
         return render(request, 'add_fidelity.html', {
             'command_list': command_list,
             'customer_id': customer_id
