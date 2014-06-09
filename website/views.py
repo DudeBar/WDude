@@ -1,6 +1,7 @@
 # coding=utf-8
 import json
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 
 from django.shortcuts import render, redirect
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
@@ -53,7 +54,12 @@ def customer_create(request):
 def customer_account(request):
     if 'customer_id' in request.session:
         customer = Customer.objects.get(pk=request.session['customer_id'])
-        return render(request, "customer_account.html", {'customer_name': customer.login})
+        return render(request, "customer_account.html",
+                      {
+                          'customer_name': customer.login,
+                          'customer_url': request.build_absolute_uri(reverse("add_fidelity", args=(customer.pk,)))
+                      }
+        )
     else:
         return redirect("home")
 
