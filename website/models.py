@@ -1,10 +1,12 @@
 import datetime
 from django.db import models
 
+TOTAL_BADE_LITRE = 5
 
 class Customer(models.Model):
     login = models.CharField(max_length=20)
     password = models.CharField(max_length=20)
+    bade = models.IntegerField(default=0)
 
     @property
     def quantity_litre(self):
@@ -14,6 +16,13 @@ class Customer(models.Model):
             for product in command.product_set.all():
                 quantity += product.quantity.quantity
         return quantity
+
+    @property
+    def due_bade(self):
+        total_conso = self.quantity_litre
+        nb_bade = int(total_conso/TOTAL_BADE_LITRE)
+        return nb_bade-self.bade
+
 
 
 class Command(models.Model):

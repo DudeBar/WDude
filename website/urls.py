@@ -15,4 +15,5 @@ urlpatterns = patterns(
         name='bar_login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),
     url(r'^add_fidelity/(?P<customer_id>.+)?/$', views.add_fidelity, name='add_fidelity'),
+    url(r'^bade_fidelity$', views.bade_fidelity, name='bade_fidelity'),
 )

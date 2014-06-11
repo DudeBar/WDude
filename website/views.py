@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from django.shortcuts import render, redirect
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product
+from website.models import Customer, Command, Product, ProductQuantity
 
 
 def home(request):
@@ -54,14 +54,17 @@ def customer_create(request):
 def customer_account(request):
     if 'customer_id' in request.session:
         customer = Customer.objects.get(pk=request.session['customer_id'])
-        command_list = Command.objects.filter(customer=customer)
+        command_list = Command.objects.filter(customer=customer).order_by("-date")
         quantity_total = customer.quantity_litre
+        nb_bade = customer.bade
         return render(request, "customer_account.html",
                       {
                           'customer_name': customer.login,
                           'customer_url': request.build_absolute_uri(reverse("add_fidelity", args=(customer.pk,))),
                           'command_list': command_list,
-                          'quantity_total': quantity_total
+                          'quantity_total': quantity_total,
+                          'nb_bade': nb_bade,
+                          'due_bade': customer.due_bade
                       }
         )
     else:
@@ -78,10 +81,12 @@ def add_command(request):
             command.save()
             for product in command_list:
                 total_command += product['price']
+                quantity = ProductQuantity.objects.get(type=product["type"])
                 Product.objects.create(
                     product_id=product['id'],
                     name=product['name'],
                     price=product['price'],
+                    quantity=quantity,
                     command=command
                 )
             command.total = total_command
@@ -101,11 +106,21 @@ def add_fidelity(request, customer_id):
         customer = Customer.objects.get(pk=request.POST['customer_id'])
         command.customer = customer
         command.save()
-        return redirect('home')
+        return redirect('add_fidelity', customer_id=customer.pk)
 
     else:
         command_list = Command.objects.filter(customer=None).order_by('-date')[:10]
+        customer = Customer.objects.get(pk=customer_id)
         return render(request, 'add_fidelity.html', {
             'command_list': command_list,
-            'customer_id': customer_id
+            'customer_id': customer_id,
+            'due_bade': customer.due_bade
         })
+
+@login_required()
+def bade_fidelity(request):
+    if request.method == 'POST':
+        customer = Customer.objects.get(pk=request.POST['customer_id'])
+        customer.bade += 1
+        customer.save()
+    return redirect('add_fidelity', customer_id=customer.pk)
