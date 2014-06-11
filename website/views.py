@@ -54,10 +54,14 @@ def customer_create(request):
 def customer_account(request):
     if 'customer_id' in request.session:
         customer = Customer.objects.get(pk=request.session['customer_id'])
+        command_list = Command.objects.filter(customer=customer)
+        quantity_total = customer.quantity_litre
         return render(request, "customer_account.html",
                       {
                           'customer_name': customer.login,
-                          'customer_url': request.build_absolute_uri(reverse("add_fidelity", args=(customer.pk,)))
+                          'customer_url': request.build_absolute_uri(reverse("add_fidelity", args=(customer.pk,))),
+                          'command_list': command_list,
+                          'quantity_total': quantity_total
                       }
         )
     else:

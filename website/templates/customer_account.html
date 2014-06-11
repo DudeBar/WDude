@@ -18,13 +18,32 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-3">Nbr Consommation:</div>
-                        <div class="col-lg-9"></div>
+                        <div class="col-lg-3">Nbr Total de litres:</div>
+                        <div class="col-lg-9">{{ quantity_total }}L</div>
                     </div>
                     <div class="row">
                         <div class="col-lg-3">Nbr Conso Offerte:</div>
                         <div class="col-lg-9"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Liste des Consos</h3>
+                </div>
+                <div class="panel-body">
+                    {% for command in command_list %}
+                        <div class="row">
+                            <div class="col-lg-3">{{ command.date|date:"d M, Y" }}</div>
+                            <div class="col-lg-9">
+                                {% for product in command.product_set.all %}
+                                    {{ product.name }} /
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
