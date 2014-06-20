@@ -1,16 +1,45 @@
 # coding=utf-8
+from datetime import datetime
 import json
+import urllib2
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.db.models import Count
 
 from django.shortcuts import render, redirect
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product, ProductQuantity
+from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount
 
 
 def home(request):
     return render(request, "home.html")
+
+def actu(request):
+    fb_access = FbAppAccount.objects.get(pk=1)
+    access_token = urllib2.urlopen("""https://graph.facebook.com/oauth/access_token?client_id=%s&client_secret=%s&grant_type=client_credentials"""%(fb_access.client_id, fb_access.client_secret)).read()
+    fb_posts = urllib2.urlopen("""https://graph.facebook.com/dudebar.fr/posts?%s"""%access_token).read()
+    table_post = json.loads(fb_posts)
+    articles = []
+    for post in table_post["data"][:10]:
+        message=None
+        link=None
+        picture=None
+        if post["type"]=="status" or post["type"]=="photo":
+            if "message" in post:
+                message=post["message"]
+            if "link" in post:
+                link=post["link"]
+            if 'picture' in post:
+                picture=post["picture"]
+            if message or picture:
+                articles.append({
+                    "message":message,
+                    "link":link,
+                    "date":datetime.strptime(post["created_time"][:10], "%Y-%m-%d"),
+                    "picture":picture
+                })
+
+    return render(request, "actu.html",{"articles":articles})
 
 
 def logout(request):

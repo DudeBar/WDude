@@ -9,16 +9,36 @@
 }
 
 .logo-head {
-    color: black;
+    color: white;
     font-weight: bold;
 }
 
 .navbar-default .navbar-nav>li>a {
     color: black;
 }
+.navbar-default .navbar-nav>li>a:hover{
+    color: white;
+}
 
 .panel-default>.panel-heading {
     color: #333;
     background-color: rgba(245, 164, 50, 0.6);
     border-color: #ddd;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: rgb(234, 126, 39);
+    border-color: #285e8e;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: rgb(234, 126, 100);
+    border-color: #285e8e;
+}
+
+.actu-logo {
+    width: 10%;
+    margin-top: -3%;
 }

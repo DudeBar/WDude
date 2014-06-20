@@ -1,3 +1,7 @@
 from django.contrib import admin
+from website.models import FbAppAccount
 
-# Register your models here.
+
+class FbAppAccountAdmin(admin.ModelAdmin):
+    pass
+admin.site.register(FbAppAccount, FbAppAccountAdmin)

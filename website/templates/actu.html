@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Actualité</h1>
+    <div class="row">
+        <div class="row">
+       {% for actu in articles %}
+            <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ actu.date|date:"d/m/Y" }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="lg-col-12">
+                    {% if actu.picture %}
+                        <img src="{{ actu.picture }}" class="img-rounded img-responsive">
+                    {% else %}
+                            <img class="img-circle actu-logo" src="/static/img/dude.jpg"/>
+                    {% endif %}
+                    {% if actu.message %}
+                        {{ actu.message }}
+                    {% endif %}
+                    {% if actu.link %}
+                        <a href="{{ actu.link }}">Cliquez ici pour accéder à l'Actualité</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+            </div>
+           {% if forloop.counter|divisibleby:3%}
+                </div>
+                <div class="row">
+           {% endif %}
+       {% endfor %}
+    </div>
+</div>
+{% endblock %}
