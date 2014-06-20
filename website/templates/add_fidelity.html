@@ -7,10 +7,10 @@
     <h1>Gestion carte fidelité</h1>
     {% if due_bade > 0 %}
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-6">
             <div class="container">
                 <div class="row">
-                    <h3>Offrir une consomation : <i>due_bade</i></h3>
+                    <h3>Offrir une consomation : <i>{{ due_bade }}</i></h3>
                     <form action="{% url "bade_fidelity" %}" method="post" class="form">
                         {% csrf_token %}
                         {% buttons %}
@@ -20,6 +20,15 @@
                         {% endbuttons %}
                         <input type="hidden" name="customer_id" value="{{ customer_id }}" />
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container">
+                <div class="row">
+                    {% for product in customer_products %}
+                        {{ product.count }} : {{ product.name }}<br/>
+                    {% endfor %}
                 </div>
             </div>
         </div>

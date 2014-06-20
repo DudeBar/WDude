@@ -2,3 +2,23 @@
     width: 50%;
     max-width: 444px;
 }
+
+.dude-head {
+    border-color: #928E8E;
+    background-color: rgba(234, 126, 39, 0.9);
+}
+
+.logo-head {
+    color: black;
+    font-weight: bold;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: black;
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: rgba(245, 164, 50, 0.6);
+    border-color: #ddd;
+}

@@ -2,6 +2,7 @@
 import json
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.db.models import Count
 
 from django.shortcuts import render, redirect
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
@@ -111,10 +112,12 @@ def add_fidelity(request, customer_id):
     else:
         command_list = Command.objects.filter(customer=None).order_by('-date')[:10]
         customer = Customer.objects.get(pk=customer_id)
+        customer_products = Product.objects.filter(command__customer=customer).values("name").annotate(count=Count("product_id")).order_by("-count")[:5]
         return render(request, 'add_fidelity.html', {
             'command_list': command_list,
             'customer_id': customer_id,
-            'due_bade': customer.due_bade
+            'due_bade': customer.due_bade,
+            'customer_products': customer_products
         })
 
 @login_required()
