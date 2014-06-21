@@ -12,7 +12,7 @@ from website.models import Customer, Command, Product, ProductQuantity, FbAppAcc
 
 
 def home(request):
-    return render(request, "home.html")
+    return render(request, "home.html", {"nav_id":"home"})
 
 def actu(request):
     fb_access = FbAppAccount.objects.get(pk=1)
@@ -39,7 +39,7 @@ def actu(request):
                     "picture":picture
                 })
 
-    return render(request, "actu.html",{"articles":articles})
+    return render(request, "actu.html",{"articles":articles, "nav_id":"actu"})
 
 
 def logout(request):
@@ -75,10 +75,10 @@ def customer_create(request):
             request.session['customer_id'] = customer.pk
             request.session['customer_name'] = customer.login
             return redirect("home")
-        return render(request, "customer_create.html", {'form': form})
+        return render(request, "customer_create.html", {'form': form, 'nav_id':'customer'})
     else:
         form = CreateCustomerForm()
-        return render(request, "customer_create.html", {'form': form})
+        return render(request, "customer_create.html", {'form': form, 'nav_id':'customer'})
 
 
 def customer_account(request):
@@ -94,7 +94,8 @@ def customer_account(request):
                           'command_list': command_list,
                           'quantity_total': quantity_total,
                           'nb_bade': nb_bade,
-                          'due_bade': customer.due_bade
+                          'due_bade': customer.due_bade,
+                          'nav_id':'customer'
                       }
         )
     else:
