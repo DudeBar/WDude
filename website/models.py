@@ -30,7 +30,7 @@ class Customer(models.Model):
 
 class Command(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now())
-    total = models.IntegerField()
+    total = models.FloatField()
     customer = models.ForeignKey(Customer, null=True)
 
 class ProductQuantity(models.Model):
