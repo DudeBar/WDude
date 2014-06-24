@@ -23,6 +23,9 @@ class Customer(models.Model):
         nb_bade = int(total_conso/TOTAL_BADE_LITRE)
         return nb_bade-self.bade
 
+    def __unicode__(self):
+        return self.login
+
 
 
 class Command(models.Model):
@@ -40,6 +43,9 @@ class Product(models.Model):
     price = models.FloatField()
     quantity = models.ForeignKey(ProductQuantity)
     command = models.ForeignKey(Command)
+
+    def __unicode__(self):
+        return self.name
 
 class Billing(models.Model):
     login = models.CharField(max_length=20)
