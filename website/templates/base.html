@@ -35,7 +35,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
-            <li {% ifequal nav_id 'home' %}class="active"{% endifequal %}><a href="{% url 'home' %}" class="glyphicon glyphicon-home">Accueil</a></li>
+            <li {% ifequal nav_id 'home' %}class="active"{% endifequal %}><a href="{% url 'home' %}" class="glyphicon glyphicon-home"></a></li>
             <li {% ifequal nav_id 'actu' %}class="active"{% endifequal %}><a href="{% url 'actu' %}">Actualité</a></li>
             {% if request.session.customer_id %}
                 <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_account' %}">Mon Compte</a></li>
