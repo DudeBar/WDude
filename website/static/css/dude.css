@@ -1,6 +1,12 @@
+
 .logo-dude {
     width: 50%;
     max-width: 444px;
+    z-index: -999;
+    height: auto;
+    position: fixed;
+    top: 10%;
+    opacity: 0.2;
 }
 
 .dude-head {
@@ -46,4 +52,19 @@
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
     background-color: rgb(245, 164, 50);
     color: white;
+}
+
+.presentation {
+    font-weight: bold;
+
+}
+.pres-logo {
+    height: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.home-fb {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
