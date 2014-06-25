@@ -132,24 +132,27 @@ def add_command(request):
 
 
 @login_required()
-def add_fidelity(request, customer_id):
+def new_fidelity(request):
     if request.method == 'POST':
         command = Command.objects.get(pk=request.POST['command_id'])
         customer = Customer.objects.get(pk=request.POST['customer_id'])
         command.customer = customer
         command.save()
         return redirect('add_fidelity', customer_id=customer.pk)
-
     else:
-        command_list = Command.objects.filter(customer=None).order_by('-date')[:10]
-        customer = Customer.objects.get(pk=customer_id)
-        customer_products = Product.objects.filter(command__customer=customer).values("name").annotate(count=Count("product_id")).order_by("-count")[:5]
-        return render(request, 'add_fidelity.html', {
-            'command_list': command_list,
-            'customer_id': customer_id,
-            'due_bade': customer.due_bade,
-            'customer_products': customer_products
-        })
+        redirect('home')
+
+@login_required()
+def add_fidelity(request, customer_id):
+    command_list = Command.objects.filter(customer=None).order_by('-date')[:10]
+    customer = Customer.objects.get(pk=customer_id)
+    customer_products = Product.objects.filter(command__customer=customer).values("name").annotate(count=Count("product_id")).order_by("-count")[:5]
+    return render(request, 'add_fidelity.html', {
+        'command_list': command_list,
+        'customer_id': customer_id,
+        'due_bade': customer.due_bade,
+        'customer_products': customer_products
+    })
 
 @login_required()
 def bade_fidelity(request):
