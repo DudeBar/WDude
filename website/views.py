@@ -144,7 +144,7 @@ def new_fidelity(request):
 
 @login_required()
 def add_fidelity(request, customer_id):
-    command_list = Command.objects.filter(customer=None).order_by('-date')[:10]
+    command_list = Command.objects.filter(customer=None).order_by('-id')[:10]
     customer = Customer.objects.get(pk=customer_id)
     customer_products = Product.objects.filter(command__customer=customer).values("name").annotate(count=Count("product_id")).order_by("-count")[:5]
     return render(request, 'add_fidelity.html', {
