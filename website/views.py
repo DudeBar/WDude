@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Count
 
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
 from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount
 
@@ -101,7 +102,7 @@ def customer_account(request):
     else:
         return redirect("home")
 
-
+@csrf_exempt
 def add_command(request):
     if request.method == 'POST':
         form = CommandBillingForm(request.POST)
