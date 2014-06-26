@@ -43,7 +43,7 @@
                             <div class="col-lg-2">{{ command.date|date:"d M, Y" }}</div>
                             <div class="col-lg-10">
                                 {% for product in command.product_set.all %}
-                                    {{ product.name }} /
+                                    {{ product.name }}&nbsp;
                                 {% endfor %}
                             </div>
                         </div>

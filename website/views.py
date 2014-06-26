@@ -2,6 +2,7 @@
 from datetime import datetime
 import json
 import urllib2
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.db.models import Count
@@ -75,7 +76,8 @@ def customer_create(request):
             customer.save()
             request.session['customer_id'] = customer.pk
             request.session['customer_name'] = customer.login
-            return redirect("home")
+            messages.success(request, "Votre compte a bien été créé")
+            return redirect("customer_account")
         return render(request, "customer_create.html", {'form': form, 'nav_id':'customer'})
     else:
         form = CreateCustomerForm()
@@ -151,7 +153,8 @@ def add_fidelity(request, customer_id):
         'command_list': command_list,
         'customer_id': customer_id,
         'due_bade': customer.due_bade,
-        'customer_products': customer_products
+        'customer_products': customer_products,
+        'customer_name':customer.login
     })
 
 @login_required()
