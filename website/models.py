@@ -33,6 +33,12 @@ class Command(models.Model):
     total = models.FloatField()
     customer = models.ForeignKey(Customer, null=True)
 
+    def __unicode__(self):
+        if self.customer:
+            return str(self.date)+" - "+self.customer.login+" : "+str(self.total)
+        else:
+            return str(self.date)+" : "+str(self.total)
+
 class ProductQuantity(models.Model):
     type = models.CharField(max_length=10)
     quantity = models.FloatField()
