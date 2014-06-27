@@ -1,5 +1,5 @@
 from django.contrib import admin
-from website.models import FbAppAccount, Customer, Product, Billing, Command
+from website.models import FbAppAccount, Customer, Product, Billing, Command, ProductQuantity
 
 
 class FbAppAccountAdmin(admin.ModelAdmin):
@@ -17,6 +17,11 @@ class BillingAdmin(admin.ModelAdmin):
 class CommandAdmin(admin.ModelAdmin):
     pass
 
+class ProductQuantityAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(ProductQuantity, ProductQuantityAdmin)
 admin.site.register(Command, CommandAdmin)
 admin.site.register(Billing, BillingAdmin)
 admin.site.register(Product, ProductAdmin)

@@ -43,6 +43,9 @@ class ProductQuantity(models.Model):
     type = models.CharField(max_length=10)
     quantity = models.FloatField()
 
+    def __unicode__(self):
+        return self.type
+
 class Product(models.Model):
     product_id = models.IntegerField()
     name = models.CharField(max_length=50)

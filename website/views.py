@@ -167,7 +167,6 @@ def bade_fidelity(request):
 
 @login_required()
 def barman_account(request):
-    #customers = Customer.objects.all()
     customers = sorted(Customer.objects.all(), key=lambda t: t.quantity_litre, reverse=True)
     return render(request, "barman_account.html",{
         "customers": customers
