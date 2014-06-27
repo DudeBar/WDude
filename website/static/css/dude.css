@@ -86,3 +86,7 @@
     text-align: center;
     text-decoration: overline underline;
 }
+
+.qr-link {
+    float: right
+}

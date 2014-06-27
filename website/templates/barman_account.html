@@ -7,7 +7,10 @@
                 {% for customer in customers %}
                     <tr>
                         <td class="customer-quantity"><span class="badge">{{ customer.quantity_litre }}</span></td>
-                        <td><a href="{% url "customer_detail" customer.pk%}">{{ customer }}</a></td>
+                        <td>
+                            <a href="{% url "customer_detail" customer.pk%}">{{ customer }}</a>
+                            <span class="qr-link"><a href="{% url "add_fidelity" customer.pk %}" class="glyphicon glyphicon-qrcode"></a></span>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>
