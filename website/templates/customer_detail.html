@@ -10,7 +10,7 @@
                         <td>{{ command.date|date:"d M, Y" }}</td>
                         <td>
                             {% for product in command.product_set.all %}
-                                {{ product.name }}
+                                / {{ product.name }}
                             {% endfor %}
                         </td>
                         <td>{{ command.total }}</td>
