@@ -78,6 +78,10 @@
     float: right;
 }
 
+.customer-quantity {
+    width: 10%;
+}
+
 .panel-body>h5{
     text-align: center;
     text-decoration: overline underline;

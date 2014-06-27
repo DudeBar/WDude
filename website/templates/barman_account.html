@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <table class="table">
+                {% for customer in customers %}
+                    <tr><td class="customer-quantity"><span class="badge">{{ customer.quantity_litre }}</span></td><td>{{ customer }}</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

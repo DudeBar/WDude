@@ -18,4 +18,6 @@ urlpatterns = patterns(
     url(r'^add_fidelity/(?P<customer_id>\d+)/$', views.add_fidelity, name='add_fidelity'),
     url(r'^add_fidelity/$', views.new_fidelity, name='new_fidelity'),
     url(r'^bade_fidelity$', views.bade_fidelity, name='bade_fidelity'),
+
+    url(r'^barman_account$', views.barman_account, name='barman_account'),
     )

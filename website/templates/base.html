@@ -42,6 +42,9 @@
             {% else %}
                 <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_create' %}">Créer ma Carte de Fidélité</a></li>
             {% endif %}
+            {% if user.is_authenticated %}
+                <li {% ifequal nav_id 'administration' %}class="active"{% endifequal %}><a href="{% url 'barman_account' %}">Administration</a></li>
+            {% endif %}
         </ul>
         <p class="navbar-text navbar-right">
         <ul class="nav navbar-nav navbar-right">
