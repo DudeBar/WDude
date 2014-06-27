@@ -5,7 +5,10 @@
         <div class="col-lg-8 col-lg-offset-2">
             <table class="table">
                 {% for customer in customers %}
-                    <tr><td class="customer-quantity"><span class="badge">{{ customer.quantity_litre }}</span></td><td>{{ customer }}</td></tr>
+                    <tr>
+                        <td class="customer-quantity"><span class="badge">{{ customer.quantity_litre }}</span></td>
+                        <td><a href="{% url "customer_detail" customer.pk%}">{{ customer }}</a></td>
+                    </tr>
                 {% endfor %}
             </table>
         </div>

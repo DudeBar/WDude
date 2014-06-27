@@ -172,3 +172,12 @@ def barman_account(request):
     return render(request, "barman_account.html",{
         "customers": customers
     })
+
+@login_required()
+def customer_detail(request, customer_id):
+    customer = Customer.objects.get(pk=customer_id)
+    commands = Command.objects.filter(customer=customer).order_by("-id")
+    return render(request, "customer_detail.html", {
+        "customer": customer,
+        "commands": commands
+    })

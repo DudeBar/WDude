@@ -20,4 +20,5 @@ urlpatterns = patterns(
     url(r'^bade_fidelity$', views.bade_fidelity, name='bade_fidelity'),
 
     url(r'^barman_account$', views.barman_account, name='barman_account'),
+    url(r'^customer_detail/(?P<customer_id>\d+)/$', views.customer_detail, name='customer_detail'),
     )

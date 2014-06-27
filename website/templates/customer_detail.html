@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ customer.login }}</h1>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <table class="table">
+                {% for command in commands %}
+                    <tr>
+                        <td>{{ command.date|date:"d M, Y" }}</td>
+                        <td>
+                            {% for product in command.product_set.all %}
+                                {{ product.name }}
+                            {% endfor %}
+                        </td>
+                        <td>{{ command.total }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
