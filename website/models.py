@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.db.models.aggregates import Sum
 
 TOTAL_BADE_LITRE = 5
 
@@ -13,8 +14,7 @@ class Customer(models.Model):
         quantity = 0
         command_list = Command.objects.filter(customer=self)
         for command in command_list:
-            for product in command.product_set.all():
-                quantity += product.quantity.quantity
+            quantity = command.product_set.all().aggregate(Sum('product__quantity__quantity'))
         return quantity
 
     @property
