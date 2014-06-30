@@ -29,7 +29,7 @@ class Customer(models.Model):
 
 
 class Command(models.Model):
-    date = models.DateTimeField(default=datetime.datetime.now())
+    date = models.DateTimeField(auto_now_add=True, blank=True)
     total = models.FloatField()
     customer = models.ForeignKey(Customer, null=True)
 
