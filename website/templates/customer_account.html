@@ -6,33 +6,33 @@
     <div class="container">
     <h1>Bonjour, {{ customer_name }}</h1>
     <div class="row">
-		<div class="col-lg-3">
+		<div class="col-lg-3 col-md-3 col-sm-3">
 			<div class="well">
                 {% qr_from_text customer_url "m" %}
             </div>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-md-9 col-sm-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Mon Compte</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-3">Nbr Total de litres:</div>
-                        <div class="col-lg-9">{{ quantity_total }}L</div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">Nbr Total de litres:</div>
+                        <div class="col-lg-9 col-md-9 col-sm-9">{{ quantity_total }}L</div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">Nbr Conso Gratuite:</div>
-                        <div class="col-lg-9">{{ due_bade }}</div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">Nbr Conso Gratuite:</div>
+                        <div class="col-lg-9 col-md-9 col-sm-9">{{ due_bade }}</div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">Nbr Conso déjà Offerte:</div>
-                        <div class="col-lg-9">{{ nb_bade }}</div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">Nbr Conso déjà Offerte:</div>
+                        <div class="col-lg-9 col-md-9 col-sm-9">{{ nb_bade }}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-md-9 col-sm-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Liste des Consos</h3>
@@ -40,8 +40,8 @@
                 <div class="panel-body">
                     {% for command in command_list %}
                         <div class="row">
-                            <div class="col-lg-2">{{ command.date|date:"d M, Y" }}</div>
-                            <div class="col-lg-10">
+                            <div class="col-lg-2 col-md-2 col-sm-2">{{ command.date|date:"d M, Y" }}</div>
+                            <div class="col-lg-10 col-md-10 col-sm-10">
                                 {% for product in command.product_set.all %}
                                     {{ product.name }}&nbsp;
                                 {% endfor %}
