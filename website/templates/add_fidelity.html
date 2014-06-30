@@ -3,36 +3,36 @@
 {% load qr_tags %}
 
 {% block content %}
-    <div class="container">
     <h1>Client : {{ customer_name }}</h1>
     {% if due_bade > 0 %}
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="container">
-                <div class="row">
-                    <h3>Offrir une consomation : <i>{{ due_bade }}</i></h3>
-                    <form action="{% url "bade_fidelity" %}" method="post" class="form">
-                        {% csrf_token %}
-                        {% buttons %}
-                        <button type="submit" class="btn btn-primary col-lg-3">
-                            Offrir
-                        </button>
-                        {% endbuttons %}
-                        <input type="hidden" name="customer_id" value="{{ customer_id }}" />
-                    </form>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="container">
+                    <div class="row">
+                        <h3>Offrir une consomation : <i>{{ due_bade }}</i></h3>
+
+                        <form action="{% url "bade_fidelity" %}" method="post" class="form">
+                            {% csrf_token %}
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary col-lg-3">
+                                    Offrir
+                                </button>
+                            {% endbuttons %}
+                            <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="container">
+                    <div class="row">
+                        {% for product in customer_products %}
+                            {{ product.count }} : {{ product.name }}<br/>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
-            <div class="container">
-                <div class="row">
-                    {% for product in customer_products %}
-                        {{ product.count }} : {{ product.name }}<br/>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
     {% endif %}
     <div class="row">
         <div class="col-lg-9">
@@ -42,29 +42,29 @@
                     <div class="row">
                         <h3>Dernières Commandes</h3>
                         {% buttons %}
-                        <button type="submit" class="btn btn-primary">
-                            Valider
-                        </button>
+                            <button type="submit" class="btn btn-primary">
+                                Valider
+                            </button>
                         {% endbuttons %}
                     </div>
                     <div class="row">
-                    <div class="btn-group-lg btn-group-vertical" data-toggle="buttons">
-                        {% for command in command_list %}
-                            <label class="btn btn-default">
-                                <input type="radio" name="command_id" value='{{ command.pk }}' class="btn btn-default">
-                                <strong>{{ command.total }}€ : </strong>
-                                {% for product in command.product_set.all|slice:":2" %}
-                                    <i>{{ product.name }}</i> /
-                                {% endfor %}
-                                ...
-                            </label>
-                        {% endfor %}
+                        <div class="btn-group-lg btn-group-vertical" data-toggle="buttons">
+                            {% for command in command_list %}
+                                <label class="btn btn-default">
+                                    <input type="radio" name="command_id" value='{{ command.pk }}'
+                                           class="btn btn-default">
+                                    <strong>{{ command.total }}€ : </strong>
+                                    {% for product in command.product_set.all|slice:":2" %}
+                                        <i>{{ product.name }}</i> /
+                                    {% endfor %}
+                                    ...
+                                </label>
+                            {% endfor %}
+                        </div>
                     </div>
-                    </div>
-                    <input type="hidden" name="customer_id" value="{{ customer_id }}" />
+                    <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
                 </form>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
