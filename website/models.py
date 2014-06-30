@@ -14,7 +14,8 @@ class Customer(models.Model):
         quantity = 0
         command_list = Command.objects.filter(customer=self)
         for command in command_list:
-            quantity = command.product_set.all().aggregate(Sum('product__quantity__quantity'))
+            for product in command.product_set.all():
+                quantity += product.quantity.quantity
         return quantity
 
     @property

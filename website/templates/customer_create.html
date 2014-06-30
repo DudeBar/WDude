@@ -4,6 +4,18 @@
 {% block content %}
     <div class="container">
     <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    Le but de la carte de fidélité du DudeBar n'étant pas de collecter vos informations personnelles, nous ne vous demanderons ni vos coordonnés ni votre adresse mail.
+                    <br/>En revanche sans ces informations il nous est impossible de vous renvoyer un mot de passe si vous l'avez oublié.
+                    <br/>En cas de perte de votre mot de passe, seul l'un des barman à la possibilité de vous en redéfinir un.
+                    <br/><b>Attention:</b> ne lui fournissez pas votre mot de passe habituel qui lui permettrait d'accéder à l'un de vos divers compte en ligne.
+                  </div>
+                </div>
+            </div>
+        </div>
+    <div class="row">
 		<div class="col-lg-6 col-lg-offset-3">
 			<div class="well">
                 <form action="{% url "customer_create" %}" method="post" class="form">
