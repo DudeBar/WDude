@@ -90,3 +90,7 @@
 .qr-link {
     float: right
 }
+
+body {
+    padding-top: 70px;
+}
