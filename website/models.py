@@ -12,7 +12,7 @@ class Customer(models.Model):
     @property
     def quantity_litre(self):
         quantity = Command.objects.filter(customer=self).aggregate(quantity=Sum('product__quantity__quantity'))
-        return quantity['quantity']
+        return quantity['quantity'] or 0
 
     @property
     def due_bade(self):
