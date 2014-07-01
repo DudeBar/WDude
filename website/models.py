@@ -11,12 +11,8 @@ class Customer(models.Model):
 
     @property
     def quantity_litre(self):
-        quantity = 0
-        command_list = Command.objects.filter(customer=self)
-        for command in command_list:
-            for product in command.product_set.all():
-                quantity += product.quantity.quantity
-        return quantity
+        quantity = Command.objects.filter(customer=self).aggregate(quantity=Sum('product__quantity__quantity'))
+        return quantity['quantity']
 
     @property
     def due_bade(self):
