@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <img id="spin_button" src="/static/img/spin_off.png" alt="Spin" onClick="startSpin();" />
+    <canvas class="the_canvas" id="myDrawingCanvas" width="434" height="434">
+        <p class="noCanvasMsg" align="center">Sorry, your browser doesn't support canvas.<br />Please try another.</p>
+    </canvas>
+    <script>
+			begin();
+            powerSelected(1);
+		</script>
+{% endblock %}
