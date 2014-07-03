@@ -6,7 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.db.models import Count
+from django.db.models import Count, Sum
+from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -110,6 +111,20 @@ def customer_account(request):
     else:
         return redirect("home")
 
+def customer_ajax_info(request):
+    if 'customer_id' in request.session:
+        if request.is_ajax():
+            customer = Customer.objects.get(pk=request.session['customer_id'])
+            customer_info = {
+                'id':customer.pk,
+                'litre': customer.quantity_litre,
+                'due_bade': customer.due_bade,
+                'bade': customer.bade
+            }
+            return HttpResponse(json.dumps(customer_info))
+    else:
+        return HttpResponse(json.dumps(["authentication required"]))
+
 @csrf_exempt
 def add_command(request):
     if request.method == 'POST':
@@ -186,3 +201,14 @@ def customer_detail(request, customer_id):
         "customer": customer,
         "commands": commands
     })
+
+def get_day_litre(request):
+    today = datetime.today()
+    quantity = Product.objects.filter(
+        command__date__year=today.year,
+        command__date__month=today.month,
+        command__date__day=today.day).aggregate(quantity=Sum('quantity__quantity'))
+    print quantity['quantity']
+
+def wheel(request):
+    return render(request, "wheel.html")
