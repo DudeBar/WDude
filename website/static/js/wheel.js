@@ -358,14 +358,14 @@ function doSpin()
 				{
 					// Do something with the knowlege. For this example the user is just alerted, but you could play a sound,
 					// change the innerHTML of a div to indicate the prize etc - up to you.
-					alert("You won " + prizes[x]['name'] + "!\nClick 'Play Again' to have another go.");
+					//alert("You won " + prizes[x]['name'] + "!\nClick 'Play Again' to have another go.");
 					break;
 				}
 			}
 		}
 
-        resetWheel();
-        powerSelected(1);
+        //resetWheel();
+        //powerSelected(1);
         return false;
 		// ADD YOUR OWN CODE HERE.
 		// If no prize detection then up to you to do whatever you want when the spinning has stopped.

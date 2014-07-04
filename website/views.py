@@ -11,8 +11,9 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from website.custom.wheel_views import _customers_can_launch
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount
+from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer
 
 
 def home(request):
@@ -94,9 +95,13 @@ def customer_create(request):
 def customer_account(request):
     if 'customer_id' in request.session:
         customer = Customer.objects.get(pk=request.session['customer_id'])
+        WheelCustomer.objects.filter(customer=customer).update(is_active=False)
         command_list = Command.objects.filter(customer=customer).order_by("-date")
         quantity_total = customer.quantity_litre
         nb_bade = customer.bade
+        can_launch = False
+        if customer.nb_wheel > 0 and _customers_can_launch():
+            can_launch = True
         return render(request, "customer_account.html",
                       {
                           'customer_name': customer.login,
@@ -105,7 +110,8 @@ def customer_account(request):
                           'quantity_total': quantity_total,
                           'nb_bade': nb_bade,
                           'due_bade': customer.due_bade,
-                          'nav_id':'customer'
+                          'nav_id':'customer',
+                          'can_launch': can_launch
                       }
         )
     else:
@@ -115,11 +121,15 @@ def customer_ajax_info(request):
     if 'customer_id' in request.session:
         if request.is_ajax():
             customer = Customer.objects.get(pk=request.session['customer_id'])
+            can_launch = 0
+            if customer.nb_wheel > 0 and _customers_can_launch():
+                can_launch = 1
             customer_info = {
                 'id':customer.pk,
                 'litre': customer.quantity_litre,
                 'due_bade': customer.due_bade,
-                'bade': customer.bade
+                'bade': customer.bade,
+                'can_launch':can_launch
             }
             return HttpResponse(json.dumps(customer_info))
     else:
@@ -175,7 +185,9 @@ def add_fidelity(request, customer_id):
         'customer_id': customer_id,
         'due_bade': customer.due_bade,
         'customer_products': customer_products,
-        'customer_name':customer.login
+        'customer_name':customer.login,
+        'quantity_litre':customer.quantity_litre,
+        'wheel_fortune': customer.nb_wheel
     })
 
 @login_required()
@@ -210,5 +222,6 @@ def get_day_litre(request):
         command__date__day=today.day).aggregate(quantity=Sum('quantity__quantity'))
     print quantity['quantity']
 
+@login_required()
 def wheel(request):
     return render(request, "wheel.html")

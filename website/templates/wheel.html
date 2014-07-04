@@ -1,12 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <img id="spin_button" src="/static/img/spin_off.png" alt="Spin" onClick="startSpin();" />
-    <canvas class="the_canvas" id="myDrawingCanvas" width="434" height="434">
-        <p class="noCanvasMsg" align="center">Sorry, your browser doesn't support canvas.<br />Please try another.</p>
-    </canvas>
+    <script>
+    $(document).ready(function() {
+        setInterval(function()
+        {
+            $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url:{% url "wheel_launcher" %},
+                    success: function(data){
+                        if (data.error)
+                            console.log(data.error);
+                        else{
+                            console.log(data);
+                            $("#customer").html(data.customer);
+                            if(data.launch == 1){
+                                resetWheel();
+                                powerSelected(1);
+                                startSpin();
+                                $.get({% url "wheel_ended" %});
+                            }
+                        }
+                    }
+        })
+        }, 1000);
+    });
+    </script>
+    <img id="spin_button" src="/static/img/spin_off.png" style="display:none" alt="Spin" onClick="startSpin();" />
+    <div class="row text-center">
+        <div class="col-lg-3">
+            <h1>Joueur: <span id="customer"></span></h1>
+        </div>
+        <div class="col-lg-6 wheel-fleche">
+            <img src="/static/img/fleche.png">
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-6 col-lg-offset-3">
+        <canvas class="the_canvas" id="myDrawingCanvas" width="434" height="434">
+            <p class="noCanvasMsg" align="center">Sorry, your browser doesn't support canvas.<br />Please try another.</p>
+        </canvas>
+        </div>
+    </div>
     <script>
 			begin();
             powerSelected(1);
-		</script>
+	</script>
 {% endblock %}

@@ -18,13 +18,27 @@
                             $('#customer_quantity_litre').html(data.litre);
                             $('#customer_due_bade').html(data.due_bade);
                             $('#customer_bade').html(data.bade);
+                            console.log(data);
+                            if (data.can_launch == 1) {
+                                $('#id-wheel-access').show();
+                            }
+                            else {
+                                $('#id-wheel-access').hide();
+                            }
                         }
                     }
         })
-        }, 10000);
+        }, 5000);
     });
     </script>
-    <h1>Bonjour, {{ customer_name }}</h1>
+    <div class="row customer-header">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+            <h1>Bonjour, {{ customer_name }}</h1>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <a href="{% url "launch_wheel" %}" class="btn btn-primary wheel-access" id="id-wheel-access">Accéder à la roue de la Fortune</a>
+        </div>
+    </div>
     <div class="row">
 		<div class="col-lg-3 col-md-3 col-sm-3">
 			<div class="well text-center">

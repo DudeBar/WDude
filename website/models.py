@@ -20,6 +20,10 @@ class Customer(models.Model):
         nb_bade = int(total_conso/TOTAL_BADE_LITRE)
         return nb_bade-self.bade
 
+    @property
+    def nb_wheel(self):
+        return WheelCustomer.objects.filter(customer=self).count()
+
     def __unicode__(self):
         return self.login
 
@@ -60,3 +64,8 @@ class Billing(models.Model):
 class FbAppAccount(models.Model):
     client_id=models.CharField(max_length=100)
     client_secret = models.CharField(max_length=100)
+
+class WheelCustomer(models.Model):
+    customer = models.ForeignKey(Customer, null=True)
+    is_active = models.BooleanField(default=False)
+    launch = models.BooleanField(default=False)
