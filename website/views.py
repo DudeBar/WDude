@@ -224,8 +224,17 @@ def get_day_litre(request):
 
 def get_day_customer(request):
     if request.is_ajax():
+        best_customers = []
         customers = sorted(Customer.objects.all(), key=lambda t: t.quantity_day_litre, reverse=True)
-        return HttpResponse(json.dumps({"customer":[customers[0].login,customers[1].login,customers[2].login]}))
+        if not WheelCustomer.objects.filter(customer__pk=9, is_active=True).exists():
+            for customer in customers[:3]:
+                if customer.quantity_day_litre > 0:
+                    best_customers.append(customer.login)
+                else:
+                    best_customers.append("")
+        else:
+            best_customers = ["manz", "manz", "manz"]
+        return HttpResponse(json.dumps({"customer":[best_customers[0],best_customers[1],best_customers[2]]}))
     else:
         return redirect('home')
 
