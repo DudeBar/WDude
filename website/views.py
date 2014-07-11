@@ -126,7 +126,7 @@ def customer_ajax_info(request):
                 can_launch = 1
             customer_info = {
                 'id':customer.pk,
-                'litre': customer.quantity_litre,
+                'litre': round(customer.quantity_litre,2),
                 'due_bade': customer.due_bade,
                 'bade': customer.bade,
                 'can_launch':can_launch
