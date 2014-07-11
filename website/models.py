@@ -77,4 +77,7 @@ class WheelCustomer(models.Model):
     launch = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.customer.login
+        if self.is_active:
+            return self.customer.login+" / c moi"
+        else:
+            return self.customer.login
