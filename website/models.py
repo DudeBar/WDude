@@ -75,3 +75,6 @@ class WheelCustomer(models.Model):
     customer = models.ForeignKey(Customer, null=True)
     is_active = models.BooleanField(default=False)
     launch = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.customer.login

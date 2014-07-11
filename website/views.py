@@ -225,7 +225,7 @@ def get_day_litre(request):
 def get_day_customer(request):
     if request.is_ajax():
         customers = sorted(Customer.objects.all(), key=lambda t: t.quantity_day_litre, reverse=True)
-        return HttpResponse(json.dumps({"customer":customers[0].login}))
+        return HttpResponse(json.dumps({"customer":[customers[0].login,customers[1].login,customers[2].login]}))
     else:
         return redirect('home')
 

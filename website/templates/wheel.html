@@ -47,7 +47,9 @@
                         if (data.error)
                             console.log(data.error);
                         else{
-                            $("#night-customer").html(data.customer)
+                            $("#night-customer1").html(data.customer[0]);
+                            $("#night-customer2").html(data.customer[1]);
+                            $("#night-customer3").html(data.customer[2]);
                         }
                     }
             });
@@ -70,7 +72,10 @@
                 Litres du soir : <b><span id="night-litre"></span>L</b>
             </div>
             <div class="well well-lg">
-                Meilleur client : <b><span id="night-customer"></span></b>
+                Meilleur client : <br>
+                <b><span id="night-customer1"></span></b><br/>
+                <b><span id="night-customer2"></span></b><br/>
+                <b><span id="night-customer3"></span></b>
             </div>
         </div>
         <div class="col-lg-6">
