@@ -215,12 +215,19 @@ def customer_detail(request, customer_id):
     })
 
 def get_day_litre(request):
-    today = datetime.today()
-    quantity = Product.objects.filter(
-        command__date__year=today.year,
-        command__date__month=today.month,
-        command__date__day=today.day).aggregate(quantity=Sum('quantity__quantity'))
-    print quantity['quantity']
+    if request.is_ajax():
+        today = datetime.today()
+        quantity = Product.objects.filter(command__date__year=today.year,command__date__month=today.month,command__date__day=today.day).aggregate(quantity=Sum('quantity__quantity'))
+        return HttpResponse(json.dumps({"litre":quantity['quantity']}))
+    else:
+        return redirect('home')
+
+def get_day_customer(request):
+    if request.is_ajax():
+        customers = sorted(Customer.objects.all(), key=lambda t: t.quantity_day_litre, reverse=True)
+        return HttpResponse(json.dumps({"customer":customers[0].login}))
+    else:
+        return redirect('home')
 
 @login_required()
 def wheel(request):

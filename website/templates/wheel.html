@@ -13,7 +13,6 @@
                         if (data.error)
                             console.log(data.error);
                         else{
-                            console.log(data);
                             $("#customer").html(data.customer);
                             if(data.launch == 1){
                                 resetWheel();
@@ -23,8 +22,37 @@
                             }
                         }
                     }
-        })
+            });
+            $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url:{% url "get_day_litre" %},
+                    success: function(data){
+                        if (data.error)
+                            console.log(data.error);
+                        else{
+                            $("#night-litre").html(data.litre)
+                        }
+                    }
+            });
         }, 1000);
+
+        setInterval(function()
+        {
+            $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url:{% url "get_day_customer" %},
+                    success: function(data){
+                        if (data.error)
+                            console.log(data.error);
+                        else{
+                            $("#night-customer").html(data.customer)
+                        }
+                    }
+            });
+        },10000);
+
     });
     </script>
     <img id="spin_button" src="/static/img/spin_off.png" style="display:none" alt="Spin" onClick="startSpin();" />
@@ -37,7 +65,15 @@
         </div>
     </div>
     <div class="row text-center">
-        <div class="col-lg-6 col-lg-offset-3">
+        <div class="col-lg-3">
+            <div class="well well-lg">
+                Litres du soir : <b><span id="night-litre"></span>L</b>
+            </div>
+            <div class="well well-lg">
+                Meilleur client : <b><span id="night-customer"></span></b>
+            </div>
+        </div>
+        <div class="col-lg-6">
         <canvas class="the_canvas" id="myDrawingCanvas" width="434" height="434">
             <p class="noCanvasMsg" align="center">Sorry, your browser doesn't support canvas.<br />Please try another.</p>
         </canvas>

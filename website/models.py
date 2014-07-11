@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from django.db import models
 from django.db.models.aggregates import Sum
 
@@ -12,7 +12,13 @@ class Customer(models.Model):
     @property
     def quantity_litre(self):
         quantity = Command.objects.filter(customer=self).aggregate(quantity=Sum('product__quantity__quantity'))
-        return round(quantity['quantity'],2) or 0
+        return quantity['quantity'] or 0
+
+    @property
+    def quantity_day_litre(self):
+        today = datetime.today()
+        quantity = Command.objects.filter(customer=self, date__year=today.year, date__month=today.month, date__day=today.day).aggregate(quantity=Sum('product__quantity__quantity'))
+        return quantity['quantity'] or 0
 
     @property
     def due_bade(self):
