@@ -5,7 +5,7 @@ from django.db.models.aggregates import Sum
 TOTAL_BADE_LITRE = 5
 
 class Customer(models.Model):
-    login = models.CharField(max_length=20)
+    login = models.CharField(max_length=200)
     password = models.CharField(max_length=20)
     bade = models.IntegerField(default=0)
 
