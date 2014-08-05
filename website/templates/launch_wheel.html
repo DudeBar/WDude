@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ customer.login }} : {{ customer.nb_wheel }}</h1>
+    <div class="row">
+        {% if can_launch %}
+            <form action="{% url "launch_wheel" %}" method="post" class="form">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-primary col-lg-3">
+                        Lancer la Roue
+                    </button>
+                <input type="hidden" name="customer_id" value="{{ customer_id }}"/>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

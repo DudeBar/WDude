@@ -1,11 +1,11 @@
-import datetime
+from datetime import datetime
 from django.db import models
 from django.db.models.aggregates import Sum
 
 TOTAL_BADE_LITRE = 5
 
 class Customer(models.Model):
-    login = models.CharField(max_length=20)
+    login = models.CharField(max_length=200)
     password = models.CharField(max_length=20)
     bade = models.IntegerField(default=0)
 
@@ -15,10 +15,20 @@ class Customer(models.Model):
         return quantity['quantity'] or 0
 
     @property
+    def quantity_day_litre(self):
+        today = datetime.today()
+        quantity = Command.objects.filter(customer=self, date__year=today.year, date__month=today.month, date__day=today.day).aggregate(quantity=Sum('product__quantity__quantity'))
+        return quantity['quantity'] or 0
+
+    @property
     def due_bade(self):
         total_conso = self.quantity_litre
         nb_bade = int(total_conso/TOTAL_BADE_LITRE)
         return nb_bade-self.bade
+
+    @property
+    def nb_wheel(self):
+        return WheelCustomer.objects.filter(customer=self).count()
 
     def __unicode__(self):
         return self.login
@@ -60,3 +70,14 @@ class Billing(models.Model):
 class FbAppAccount(models.Model):
     client_id=models.CharField(max_length=100)
     client_secret = models.CharField(max_length=100)
+
+class WheelCustomer(models.Model):
+    customer = models.ForeignKey(Customer, null=True)
+    is_active = models.BooleanField(default=False)
+    launch = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        if self.is_active:
+            return self.customer.login+" / c moi"
+        else:
+            return self.customer.login

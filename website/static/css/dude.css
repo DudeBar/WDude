@@ -91,6 +91,18 @@
     float: right
 }
 
+.customer-header{
+    margin-bottom: 20px;
+}
+
+.wheel-fleche {
+    top:15px;
+    z-index: 1000;
+}
+.wheel-access {
+    display: none;
+}
+
 body {
     padding-top: 70px;
 }

@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
 from website import views
+from website.custom import wheel_views
 
 urlpatterns = patterns(
     '',
@@ -23,4 +24,11 @@ urlpatterns = patterns(
 
     url(r'^barman_account$', views.barman_account, name='barman_account'),
     url(r'^customer_detail/(?P<customer_id>\d+)/$', views.customer_detail, name='customer_detail'),
+
+    url(r'^add_customer_wheel$', wheel_views.add_customer_wheel, name='add_customer_wheel'),
+    url(r'^launch_wheel$', wheel_views.launch_wheel, name='launch_wheel'),
+    url(r'^wheel_launcher/$', wheel_views.wheel_launcher, name='wheel_launcher'),
+    url(r'^wheel_ended/$', wheel_views.wheel_ended, name='wheel_ended'),
+    url(r'^get_day_litre/$', views.get_day_litre, name='get_day_litre'),
+    url(r'^get_day_customer/$', views.get_day_customer, name='get_day_customer'),
     )

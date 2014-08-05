@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <script>
+    $(document).ready(function() {
+        setInterval(function()
+        {
+            $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url:{% url "wheel_launcher" %},
+                    success: function(data){
+                        if (data.error)
+                            console.log(data.error);
+                        else{
+                            $("#customer").html(data.customer);
+                            if(data.launch == 1){
+                                resetWheel();
+                                powerSelected(1);
+                                startSpin();
+                                $.get({% url "wheel_ended" %});
+                            }
+                        }
+                    }
+            });
+            $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url:{% url "get_day_litre" %},
+                    success: function(data){
+                        if (data.error)
+                            console.log(data.error);
+                        else{
+                            $("#night-litre").html(data.litre)
+                        }
+                    }
+            });
+        }, 1000);
+
+        setInterval(function()
+        {
+            $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url:{% url "get_day_customer" %},
+                    success: function(data){
+                        if (data.error)
+                            console.log(data.error);
+                        else{
+                            $("#night-customer1").html(data.customer[0]);
+                            $("#night-customer2").html(data.customer[1]);
+                            $("#night-customer3").html(data.customer[2]);
+                        }
+                    }
+            });
+        },10000);
+
+    });
+    </script>
+    <img id="spin_button" src="/static/img/spin_off.png" style="display:none" alt="Spin" onClick="startSpin('random');" />
+    <div class="row text-center">
+        <div class="col-lg-3">
+            <h1>Joueur: <span id="customer"></span></h1>
+        </div>
+        <div class="col-lg-6 wheel-fleche">
+            <img src="/static/img/fleche.png">
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-3">
+            <div class="well well-lg">
+                Litres du soir : <b><span id="night-litre"></span>L</b>
+            </div>
+            <div class="well well-lg">
+                Meilleurs Clients : <br>
+                <b><span id="night-customer1"></span></b><br/>
+                <b><span id="night-customer2"></span></b><br/>
+                <b><span id="night-customer3"></span></b>
+            </div>
+        </div>
+        <div class="col-lg-6">
+        <canvas class="the_canvas" id="myDrawingCanvas" width="434" height="434">
+            <p class="noCanvasMsg" align="center">Sorry, your browser doesn't support canvas.<br />Please try another.</p>
+        </canvas>
+        </div>
+    </div>
+    <script>
+			begin();
+            powerSelected(1);
+	</script>
+{% endblock %}

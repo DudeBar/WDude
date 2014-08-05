@@ -11,8 +11,9 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from website.custom.wheel_views import _customers_can_launch
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount
+from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer
 
 
 def home(request):
@@ -94,9 +95,13 @@ def customer_create(request):
 def customer_account(request):
     if 'customer_id' in request.session:
         customer = Customer.objects.get(pk=request.session['customer_id'])
+        WheelCustomer.objects.filter(customer=customer).update(is_active=False)
         command_list = Command.objects.filter(customer=customer).order_by("-date")
         quantity_total = customer.quantity_litre
         nb_bade = customer.bade
+        can_launch = False
+        if customer.nb_wheel > 0 and _customers_can_launch():
+            can_launch = True
         return render(request, "customer_account.html",
                       {
                           'customer_name': customer.login,
@@ -105,7 +110,8 @@ def customer_account(request):
                           'quantity_total': quantity_total,
                           'nb_bade': nb_bade,
                           'due_bade': customer.due_bade,
-                          'nav_id':'customer'
+                          'nav_id':'customer',
+                          'can_launch': can_launch
                       }
         )
     else:
@@ -115,11 +121,15 @@ def customer_ajax_info(request):
     if 'customer_id' in request.session:
         if request.is_ajax():
             customer = Customer.objects.get(pk=request.session['customer_id'])
+            can_launch = 0
+            if customer.nb_wheel > 0 and _customers_can_launch():
+                can_launch = 1
             customer_info = {
                 'id':customer.pk,
-                'litre': customer.quantity_litre,
+                'litre': round(customer.quantity_litre,2),
                 'due_bade': customer.due_bade,
-                'bade': customer.bade
+                'bade': customer.bade,
+                'can_launch':can_launch
             }
             return HttpResponse(json.dumps(customer_info))
     else:
@@ -175,7 +185,9 @@ def add_fidelity(request, customer_id):
         'customer_id': customer_id,
         'due_bade': customer.due_bade,
         'customer_products': customer_products,
-        'customer_name':customer.login
+        'customer_name':customer.login,
+        'quantity_litre':customer.quantity_litre,
+        'wheel_fortune': customer.nb_wheel
     })
 
 @login_required()
@@ -203,12 +215,29 @@ def customer_detail(request, customer_id):
     })
 
 def get_day_litre(request):
-    today = datetime.today()
-    quantity = Product.objects.filter(
-        command__date__year=today.year,
-        command__date__month=today.month,
-        command__date__day=today.day).aggregate(quantity=Sum('quantity__quantity'))
-    print quantity['quantity']
+    if request.is_ajax():
+        today = datetime.today()
+        quantity = Product.objects.filter(command__date__year=today.year,command__date__month=today.month,command__date__day=today.day).aggregate(quantity=Sum('quantity__quantity'))
+        return HttpResponse(json.dumps({"litre":quantity['quantity']}))
+    else:
+        return redirect('home')
 
+def get_day_customer(request):
+    if request.is_ajax():
+        best_customers = []
+        customers = sorted(Customer.objects.all(), key=lambda t: t.quantity_day_litre, reverse=True)
+        if not WheelCustomer.objects.filter(customer__pk=9, is_active=True).exists():
+            for customer in customers[:3]:
+                if customer.quantity_day_litre > 0:
+                    best_customers.append(customer.login)
+                else:
+                    best_customers.append("")
+        else:
+            best_customers = ["manz", "manz", "manz"]
+        return HttpResponse(json.dumps({"customer":[best_customers[0],best_customers[1],best_customers[2]]}))
+    else:
+        return redirect('home')
+
+@login_required()
 def wheel(request):
     return render(request, "wheel.html")
