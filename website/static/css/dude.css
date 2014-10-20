@@ -11,25 +11,32 @@
 
 .dude-head {
     border-color: #928E8E;
-    background-color: rgba(234, 126, 39, 0.9);
+    background-color: rgba(237, 127, 16, 0.8);
 }
 
 .logo-head {
-    color: white;
+    color: rgba(0, 0, 0, 0.8);
     font-weight: bold;
 }
 
 .navbar-default .navbar-nav>li>a {
-    color: black;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+}
+.navbar-default .navbar-nav>li>a>span {
+    color: white;
 }
 .navbar-default .navbar-nav>li>a:hover{
     color: white;
 }
 
 .panel-default>.panel-heading {
-    color: #333;
-    background-color: rgba(245, 164, 50, 0.6);
+    color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(237, 127, 16, 0.8);
     border-color: #ddd;
+}
+.panel-default>.panel-heading>.panel-title{
+
 }
 
 .btn-primary {
@@ -103,6 +110,12 @@
     display: none;
 }
 
+.white-ico {
+    color: white;
+    margin-right: 5px;
+}
+
 body {
     padding-top: 70px;
+    background-color: rgba(170, 174, 175, 0.4);
 }

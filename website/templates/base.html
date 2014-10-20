@@ -44,11 +44,11 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
             <li {% ifequal nav_id 'home' %}class="active"{% endifequal %}><a href="{% url 'home' %}" class="glyphicon glyphicon-home"></a></li>
-            <li {% ifequal nav_id 'actu' %}class="active"{% endifequal %}><a href="{% url 'actu' %}">Actualité</a></li>
+            <li {% ifequal nav_id 'actu' %}class="active"{% endifequal %}><a href="{% url 'actu' %}"><span class="glyphicon glyphicon-star-empty"></span>Actualité</a></li>
             {% if request.session.customer_id %}
-                <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_account' %}">Mon Compte</a></li>
+                <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_account' %}"><span class="glyphicon glyphicon-user"></span>Mon Compte</a></li>
             {% else %}
-                <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_create' %}">Créer ma Carte de Fidélité</a></li>
+                <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_create' %}"><span class="glyphicon glyphicon-user"></span>Créer ma Carte de Fidélité</a></li>
             {% endif %}
             {% if user.is_authenticated %}
                 <li {% ifequal nav_id 'administration' %}class="active"{% endifequal %}><a href="{% url 'barman_account' %}">Administration</a></li>
