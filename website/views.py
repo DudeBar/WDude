@@ -54,8 +54,10 @@ def actu(request):
 
 def logout(request):
     if "customer_id" in request.session:
-        request.session.flush()
-        request.session.clear()
+        #request.session.flush()
+        #request.session.clear()
+        del request.session['customer_id']
+        del request.session['customer_name']
     return redirect("home")
 
 
