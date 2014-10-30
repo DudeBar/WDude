@@ -31,4 +31,6 @@ urlpatterns = patterns(
     url(r'^wheel_ended/$', wheel_views.wheel_ended, name='wheel_ended'),
     url(r'^get_day_litre/$', views.get_day_litre, name='get_day_litre'),
     url(r'^get_day_customer/$', views.get_day_customer, name='get_day_customer'),
+
+    url(r'^quartier_beaux_arts_montpellier/$', views.quartier, name='quartier'),
     )

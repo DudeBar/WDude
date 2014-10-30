@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+            <div class="panel-body">
+				Le Quartier des Beaux Arts
+	        </div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	{% for commerce in commerces %}
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+            <div class="panel-body">
+	            <div class="commerce-name col-lg-12">
+		            <span {% if commerce.type == '3' %}
+			                class="glyphicon glyphicon-glass"
+			              {% elif commerce.type == '2' %}
+			                class="glyphicon glyphicon-tree-deciduous"
+		                  {% elif commerce.type == '1' %}
+		                    class="glyphicon glyphicon-cutlery"
+		                  {% endif %}></span>
+					{{ commerce.name }}
+		        </div>
+                <div class="commerce-separator col-lg-12"></div>
+                <div class="col-lg-3">
+	                {% if commerce.image %}<img class="img-rounded img-responsive" src="{{ commerce.image }}">{% endif %}
+	            </div>
+                <div class="col-lg-9">
+	                <p><b>Addresse</b> : {{ commerce.address }}</p>
+	                {% if commerce.tel %}<p><b>Tel</b> : {{ commerce.tel }}</p>{% endif %}
+	                <p><b>Web</b> : {{ commerce.website }}</p>
+                    <p>{{ commerce.description }}</p>
+	            </div>
+	        </div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

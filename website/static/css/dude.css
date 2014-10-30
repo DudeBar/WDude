@@ -11,7 +11,7 @@
 
 .dude-head {
     border-color: #928E8E;
-    background-color: rgba(237, 127, 16, 0.8);
+    background-color: rgba(237, 127, 16, 1);
 }
 
 .logo-head {
@@ -113,6 +113,17 @@
 .white-ico {
     color: white;
     margin-right: 5px;
+}
+
+.commerce-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.commerce-separator {
+    height: 1px;
+    background-color: rgba(237, 127, 16, 0.8);
+    margin-bottom: 10px;
 }
 
 body {

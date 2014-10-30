@@ -13,7 +13,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from website.custom.wheel_views import _customers_can_launch
 from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer
+from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer, Commerces
 
 
 def home(request):
@@ -243,3 +243,10 @@ def get_day_customer(request):
 @login_required()
 def wheel(request):
     return render(request, "wheel.html")
+
+
+def quartier(request):
+    commerces = Commerces.objects.all().order_by('ordre')
+    return render(request, "quartier.html", {
+        'commerces': commerces
+    })

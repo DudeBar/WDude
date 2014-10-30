@@ -81,3 +81,19 @@ class WheelCustomer(models.Model):
             return self.customer.login+" / c moi"
         else:
             return self.customer.login
+
+
+class Commerces(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=200)
+    tel = models.CharField(max_length=20, null=True, blank=True)
+    contact = models.CharField(max_length=50, null=True, blank=True)
+    type = models.CharField(max_length=100, null=True)
+    description = models.TextField(null=True, default=None)
+    livraison = models.BooleanField(default=False)
+    website = models.CharField(max_length=200, default=None, blank=True)
+    ordre = models.IntegerField(default=0)
+    image = models.CharField(max_length=200, default=None, blank=True)
+
+    def __unicode__(self):
+        return self.name
