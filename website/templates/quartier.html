@@ -34,9 +34,11 @@
 	                <p><b>Addresse</b> : {{ commerce.address }}</p>
 	                {% if commerce.tel %}<p><b>Tel</b> : {{ commerce.tel }}</p>{% endif %}
 	                <p><a href="{{ commerce.website }}">Site Internet</a></p>
-                    <div class="col-lg-12 commerce-separator"></div>
-                    <p>{{ commerce.description }}</p>
 	            </div>
+                <div class="col-lg-12 commerce-separator"></div>
+                <div class="col-lg-12">
+                    <p>{{ commerce.description }}</p>
+                </div>
 	        </div>
 		</div>
 	</div>
