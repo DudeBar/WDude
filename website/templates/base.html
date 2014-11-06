@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head profile="http://www.w3.org/2005/10/profile">
-    <title>Dude Bar {{ nav_id }}</title>
+    <title>Dude Bar {% if nav_id == "home" %}- Montpellier{% else %}{{ nav_id }}{% endif %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="mobile-web-app-capable" content="yes">
@@ -51,7 +51,7 @@
                 <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_create' %}"><span class="glyphicon glyphicon-user white-ico"></span>Créer ma Carte de Fidélité</a></li>
             {% endif %}
             <li><a href="#"><span class="glyphicon glyphicon-minus"></span></a></li>
-            <li><a href="{% url "quartier" %}"><span class="glyphicon glyphicon-info-sign white-ico"></span>Le Quartier</a></li>
+            <li {% ifequal nav_id 'Beaux Arts' %}class="active"{% endifequal %}><a href="{% url "quartier" %}"><span class="glyphicon glyphicon-info-sign white-ico"></span>Le Quartier</a></li>
             {% if user.is_authenticated %}
                 <li {% ifequal nav_id 'administration' %}class="active"{% endifequal %}><a href="{% url 'barman_account' %}">Administration</a></li>
             {% endif %}

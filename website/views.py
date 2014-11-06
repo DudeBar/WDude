@@ -248,7 +248,8 @@ def wheel(request):
 def quartier(request):
     commerces = Commerces.objects.all().order_by('ordre')
     return render(request, "quartier.html", {
-        'commerces': commerces
+        'commerces': commerces,
+        'nav_id': "Beaux Arts"
     })
 
 def redirect_quartier(request):
