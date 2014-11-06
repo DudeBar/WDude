@@ -33,4 +33,5 @@ urlpatterns = patterns(
     url(r'^get_day_customer/$', views.get_day_customer, name='get_day_customer'),
 
     url(r'^quartier-beaux-arts-montpellier/$', views.quartier, name='quartier'),
+    url(r'^quartier_beaux_arts_montpellier/$', views.redirect_quartier, name='redirect_quartier'),
     )

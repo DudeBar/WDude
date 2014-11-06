@@ -250,3 +250,6 @@ def quartier(request):
     return render(request, "quartier.html", {
         'commerces': commerces
     })
+
+def redirect_quartier(request):
+    return redirect('quartier')
