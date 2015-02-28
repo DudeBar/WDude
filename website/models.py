@@ -126,7 +126,8 @@ class MusicTrack(models.Model):
         last_track = MusicTrack.objects.all().order_by('-pk').first()
         current_track = MusicTrack(**track_data)
 
-        if last_track.artist == current_track.artist and last_track.album == current_track.album and last_track.title == current_track.title:
-            raise MusicTrackAlreadyRegistered()
+        if last_track:
+            if last_track.artist == current_track.artist and last_track.album == current_track.album and last_track.title == current_track.title:
+                raise MusicTrackAlreadyRegistered()
 
         return current_track
