@@ -158,7 +158,7 @@ def add_command(request):
         command.total = total_command
         command.save()
 
-    use_billing_data(request, add_commands)
+    return use_billing_data(request, add_commands)
 
 
 @login_required()
