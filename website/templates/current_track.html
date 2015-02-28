@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% if track %}
+            <h1>{{ track.title }}</h1> <br/>
+            {{ track.album }} <br/>
+            {{ track.artist }} <br/>
+        {% else %}
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h1>Pas de musique au Dude ?</h1>
+
+                    <iframe width="560" height="315" src="//www.youtube.com/embed/p8oi6M4z_e0?autoplay=1"
+                            frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}

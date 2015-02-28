@@ -8,12 +8,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Count, Sum
 from django.http import HttpResponse
+from django.http.response import HttpResponseBadRequest
 
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from website.custom.wheel_views import _customers_can_launch
-from website.form import CreateCustomerForm, LoginForm, CommandBillingForm
-from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer, Commerces
+from website.form import CreateCustomerForm, LoginForm, BillingForm
+from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer, Commerces, \
+    MusicTrack, MusicTrackAlreadyRegistered
 
 
 def home(request):
@@ -139,31 +141,24 @@ def customer_ajax_info(request):
 
 @csrf_exempt
 def add_command(request):
-    if request.method == 'POST':
-        form = CommandBillingForm(request.POST)
-        if form.is_valid():
-            command_list = json.loads(form.cleaned_data['command'])
-            total_command = 0
-            command = Command(total=total_command)
-            command.save()
-            for product in command_list:
-                total_command += product['price']
-                quantity = ProductQuantity.objects.get(type=product["type"])
-                Product.objects.create(
-                    product_id=product['id'],
-                    name=product['name'],
-                    price=product['price'],
-                    quantity=quantity,
-                    command=command
-                )
-            command.total = total_command
-            command.save()
+    def add_commands(command_list):
+        total_command = 0
+        command = Command(total=total_command)
+        command.save()
+        for product in command_list:
+            total_command += product['price']
+            quantity = ProductQuantity.objects.get(type=product["type"])
+            Product.objects.create(
+                product_id=product['id'],
+                name=product['name'],
+                price=product['price'],
+                quantity=quantity,
+                command=command
+            )
+        command.total = total_command
+        command.save()
 
-        else:
-            return False
-    else:
-        form = CommandBillingForm()
-        return render(request, "temp_command.html", {'form': form})
+    use_billing_data(request, add_commands)
 
 
 @login_required()
@@ -252,5 +247,46 @@ def quartier(request):
         'nav_id': "Beaux Arts"
     })
 
+
 def redirect_quartier(request):
     return redirect('quartier')
+
+
+def use_billing_data(request, callback):
+    form = BillingForm(request.POST or {})
+
+    if request.method == 'POST':
+        if form.is_valid():
+            data = json.loads(form.cleaned_data['data'])
+            callback(data)
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+    else:
+        form = BillingForm()
+        return render(request, "temp_command.html", {'form': form})
+
+@csrf_exempt
+def add_music_track(request):
+    def put_music_track(data):
+        try:
+            track = MusicTrack.from_sonos_json(data)
+            track.save()
+
+            tracks = MusicTrack.objects.all().order_by('pk')[:21]
+            if len(tracks) == 21:
+                tracks[0].delete()
+        except MusicTrackAlreadyRegistered:
+            pass
+
+    return use_billing_data(request, put_music_track)
+
+
+def get_last_music_track(request):
+    track = MusicTrack.objects.all().order_by('-pk').first()
+    return render(request, "current_track.html", {'track': track})
+
+
+def get_registered_tracks(request):
+    tracks = MusicTrack.objects.all().order_by('-pk')
+    return render(request, "current_tracks.html", {'tracks': tracks})

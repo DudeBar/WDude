@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% for track in tracks %}
+            {% include 'current_track.html' %}
+        {% endfor %}
+
+    </div>
+{% endblock %}

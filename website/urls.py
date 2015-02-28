@@ -14,6 +14,12 @@ urlpatterns = patterns(
     url(r'^customer_ajax_info/$', views.customer_ajax_info, name='customer_ajax_info'),
 
     url(r'^add_command$', views.add_command, name='add_command'),
+
+    url(r'^music$', views.add_music_track, name='add_music_track'),
+    url(r'^music/last$', views.get_last_music_track, name='get_last_music_track'),
+    url(r'^music/all', views.get_registered_tracks, name='get_registered_tracks'),
+
+
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'bar_login.html'},
         name='bar_login'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout'),

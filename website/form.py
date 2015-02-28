@@ -33,13 +33,13 @@ class CreateCustomerForm(forms.Form):
         return self.cleaned_data
 
 
-class CommandBillingForm(forms.Form):
+class BillingForm(forms.Form):
     login = forms.CharField(max_length=20)
     password = forms.CharField(max_length=20)
-    command = forms.CharField(widget=forms.Textarea)
+    data = forms.CharField(widget=forms.Textarea)
 
     def clean(self):
-        super(CommandBillingForm, self).clean()
+        super(BillingForm, self).clean()
         if not Billing.objects.filter(login=self.cleaned_data['login']).exists():
             raise forms.ValidationError("ERROR")
         else:
