@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
+    <div class="col-lg-10">
         {% if track %}
-            <h1>{{ track.title }}</h1> <br/>
-            {{ track.album }} <br/>
-            {{ track.artist }} <br/>
+            <div class="col-lg-2">{{ track.date|date:'d/m H:i' }}</div>
+            <div class="col-lg-8">
+                <strong>{{ track.title }}</strong> <br/>
+                {{ track.album }} / {{ track.artist }}<br/>
+            </div>
         {% else %}
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">

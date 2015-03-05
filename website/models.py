@@ -114,6 +114,7 @@ class MusicTrack(models.Model):
     album = models.TextField(null=False)
     title = models.TextField(null=False)
     data = models.TextField(null=True)
+    date = models.DateTimeField(auto_now_add=True, blank=True)
 
     @classmethod
     def from_sonos_json(cls, data):
@@ -131,3 +132,9 @@ class MusicTrack(models.Model):
                 raise MusicTrackAlreadyRegistered()
 
         return current_track
+
+class FavoriteMusic(models.Model):
+    customer = models.ForeignKey('Customer')
+    artist = models.TextField(null=False)
+    album = models.TextField(null=False)
+    title = models.TextField(null=False)
