@@ -114,7 +114,7 @@ class MusicTrack(models.Model):
     album = models.TextField(null=False)
     title = models.TextField(null=False)
     data = models.TextField(null=True)
-    date = models.DateTimeField(auto_now_add=True, null=True)
+    date = models.DateTimeField(null=True)
 
     @classmethod
     def from_sonos_json(cls, data):

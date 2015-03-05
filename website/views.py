@@ -271,6 +271,7 @@ def add_music_track(request):
     def put_music_track(data):
         try:
             track = MusicTrack.from_sonos_json(data)
+            track.date = datetime.now()
             track.save()
 
             tracks = MusicTrack.objects.all().order_by('pk')[:21]
