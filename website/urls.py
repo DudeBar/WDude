@@ -12,12 +12,14 @@ urlpatterns = patterns(
     url(r'^customer_create$', views.customer_create, name='customer_create'),
     url(r'^customer_account$', views.customer_account, name='customer_account'),
     url(r'^customer_ajax_info/$', views.customer_ajax_info, name='customer_ajax_info'),
+    url(r'^customer_music$', views.customer_music, name='customer_music'),
 
     url(r'^add_command$', views.add_command, name='add_command'),
 
     url(r'^music$', views.add_music_track, name='add_music_track'),
     url(r'^music/last$', views.get_last_music_track, name='get_last_music_track'),
     url(r'^music/all', views.get_registered_tracks, name='get_registered_tracks'),
+    url(r'^music/save/(?P<music_id>\d+)/$', views.save_music, name='save_music'),
 
 
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'bar_login.html'},

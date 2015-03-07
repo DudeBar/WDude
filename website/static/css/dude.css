@@ -126,6 +126,24 @@
     margin-bottom: 10px;
 }
 
+.dude-music {
+    color: black;
+}
+
+.music-time {
+    color: rgba(237, 127, 16, 1);
+}
+
+.music-title {
+    font-size: 20px;
+}
+
+.dude-btn {
+    background-color: rgba(237, 127, 16, 1);
+    color: white;
+    text-align: center;
+}
+
 body {
     padding-top: 70px;
     background-color: rgba(170, 174, 175, 0.4);

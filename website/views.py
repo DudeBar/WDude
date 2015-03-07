@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from website.custom.wheel_views import _customers_can_launch
 from website.form import CreateCustomerForm, LoginForm, BillingForm
 from website.models import Customer, Command, Product, ProductQuantity, FbAppAccount, WheelCustomer, Commerces, \
-    MusicTrack, MusicTrackAlreadyRegistered
+    MusicTrack, MusicTrackAlreadyRegistered, FavoriteMusic
 
 
 def home(request):
@@ -106,6 +106,7 @@ def customer_account(request):
         can_launch = False
         if customer.nb_wheel > 0 and _customers_can_launch():
             can_launch = True
+
         return render(request, "customer_account.html",
                       {
                           'customer_name': customer.login,
@@ -115,7 +116,8 @@ def customer_account(request):
                           'nb_bade': nb_bade,
                           'due_bade': customer.due_bade,
                           'nav_id':'customer',
-                          'can_launch': can_launch
+                          'can_launch': can_launch,
+                          'customer_music': FavoriteMusic.objects.filter(customer=customer).order_by("-pk")[:5]
                       }
         )
     else:
@@ -274,8 +276,8 @@ def add_music_track(request):
             track.date = datetime.now()
             track.save()
 
-            tracks = MusicTrack.objects.all().order_by('pk')[:21]
-            if len(tracks) == 21:
+            tracks = MusicTrack.objects.all().order_by('pk')[:22]
+            if len(tracks) == 22:
                 tracks[0].delete()
         except MusicTrackAlreadyRegistered:
             pass
@@ -289,5 +291,31 @@ def get_last_music_track(request):
 
 
 def get_registered_tracks(request):
-    tracks = MusicTrack.objects.all().order_by('-pk')
-    return render(request, "current_tracks.html", {'tracks': tracks})
+    tracks = MusicTrack.objects.all().order_by('-pk')[:21]
+    return render(request, "current_tracks.html", {'tracks': tracks, 'nav_id':'music',})
+
+
+def save_music(request, music_id):
+    try:
+        if 'customer_id' in request.session:
+            customer = Customer.objects.get(pk=request.session['customer_id'])
+            music = MusicTrack.objects.get(pk=music_id)
+            FavoriteMusic.objects.create(
+                customer=customer,
+                artist=music.artist,
+                album=music.album,
+                title=music.title
+            )
+            messages.success(request, "musique a bien été ajoutée")
+        else:
+            messages.error(request, "Vous devez être connecté")
+    finally:
+        return redirect('get_registered_tracks')
+
+def customer_music(request):
+    if 'customer_id' in request.session:
+        customer = Customer.objects.get(pk=request.session['customer_id'])
+        tracks = FavoriteMusic.objects.filter(customer=customer).order_by('-pk')
+        return render(request, "customer_music.html", {'tracks':tracks})
+    else:
+        return redirect('home')

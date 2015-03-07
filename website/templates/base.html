@@ -45,6 +45,7 @@
         <ul class="nav navbar-nav">
             <li {% ifequal nav_id 'home' %}class="active"{% endifequal %}><a href="{% url 'home' %}" class="glyphicon glyphicon-home"></a></li>
             <li {% ifequal nav_id 'actu' %}class="active"{% endifequal %}><a href="{% url 'actu' %}"><span class="glyphicon glyphicon-star-empty white-ico"></span>Actualité</a></li>
+            <li {% ifequal nav_id 'music' %}class="active"{% endifequal %}><a href="{% url 'get_registered_tracks' %}"><span class="glyphicon glyphicon-headphones white-ico"></span>Musique</a></li>
             {% if request.session.customer_id %}
                 <li {% ifequal nav_id 'customer' %}class="active"{% endifequal %}><a href="{% url 'customer_account' %}"><span class="glyphicon glyphicon-user white-ico"></span>Mon Compte</a></li>
             {% else %}

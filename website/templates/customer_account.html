@@ -18,7 +18,6 @@
                             $('#customer_quantity_litre').html(data.litre);
                             $('#customer_due_bade').html(data.due_bade);
                             $('#customer_bade').html(data.bade);
-                            console.log(data);
                             if (data.can_launch == 1) {
                                 $('#id-wheel-access').show();
                             }
@@ -63,6 +62,20 @@
                         <div class="col-lg-3 col-md-3 col-sm-3">Nbr Conso déjà Offerte:</div>
                         <div class="col-lg-9 col-md-9 col-sm-9" id="customer_bade">{{ nb_bade }}</div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ma Musique</h3>
+                </div>
+                <div class="panel-body">
+                    {% for track in customer_music %}
+                        {% include 'current_track.html' %}
+                    {% endfor %}
+                    <hr>
+                    <a href="{% url "customer_music" %}" class="btn dude-btn col-lg-12 col-md-12 col-sm-12">Voir tous les Titres</a>
                 </div>
             </div>
         </div>

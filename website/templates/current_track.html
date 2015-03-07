@@ -1,23 +1,16 @@
-{% extends "base.html" %}
+{% if track %}
+    <a href="{% url "save_music" track.pk %}" class="dude-music">
+        <h4 class="list-group-item-heading music-time"><i>{{ track.date|date:'d/m H:i' }}</i></h4>
+        <p class="music-title"><b>{{ track.title }}</b></p>
+        <p>{{ track.artist }} / {{ track.album }}<br/></p>
+    </a>
+{% else %}
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <h1>Pas de musique au Dude ?</h1>
 
-{% block content %}
-    <div class="col-lg-10">
-        {% if track %}
-            <div class="col-lg-2">{{ track.date|date:'d/m H:i' }}</div>
-            <div class="col-lg-8">
-                <strong>{{ track.title }}</strong> <br/>
-                {{ track.album }} / {{ track.artist }}<br/>
-            </div>
-        {% else %}
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <h1>Pas de musique au Dude ?</h1>
-
-                    <iframe width="560" height="315" src="//www.youtube.com/embed/p8oi6M4z_e0?autoplay=1"
-                            frameborder="0" allowfullscreen></iframe>
-                </div>
-            </div>
-        {% endif %}
-
+            <iframe width="560" height="315" src="//www.youtube.com/embed/p8oi6M4z_e0?autoplay=1"
+                    frameborder="0" allowfullscreen></iframe>
+        </div>
     </div>
-{% endblock %}
+{% endif %}
