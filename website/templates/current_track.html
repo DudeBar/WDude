@@ -1,6 +1,14 @@
 {% if track %}
-    <a href="{% url "save_music" track.pk %}" class="dude-music">
-        <h4 class="list-group-item-heading music-time"><i>{{ track.date|date:'d/m H:i' }}</i></h4>
+    {% if not customer_name %}<a href="{% url "save_music" track.pk %}" class="dude-music">{% endif %}
+        <h4 class="list-group-item-heading music-time">
+            <i>
+                {% if not customer_name %}
+                    {{ track.date|date:'d/m H:i' }}
+                {% else %}
+                    Ajouté le : <b>{{ track.date|date:'d/m/Y' }}</b>
+                {% endif %}
+            </i>
+        </h4>
         <p class="music-title"><b>{{ track.title }}</b></p>
         <p>{{ track.artist }} / {{ track.album }}<br/></p>
     </a>

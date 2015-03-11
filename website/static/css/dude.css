@@ -144,6 +144,10 @@
     text-align: center;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 body {
     padding-top: 70px;
     background-color: rgba(170, 174, 175, 0.4);

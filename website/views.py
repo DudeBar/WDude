@@ -316,6 +316,6 @@ def customer_music(request):
     if 'customer_id' in request.session:
         customer = Customer.objects.get(pk=request.session['customer_id'])
         tracks = FavoriteMusic.objects.filter(customer=customer).order_by('-pk')
-        return render(request, "customer_music.html", {'tracks':tracks})
+        return render(request, "customer_music.html", {'tracks':tracks, "customer_name": customer.login})
     else:
         return redirect('home')
